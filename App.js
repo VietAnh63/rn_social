@@ -23,17 +23,17 @@ import {PersistGate} from 'redux-persist/es/integration/react';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import allReducers from './src/reducers';
-import Test from './src/screens/Test';
+
 const Stack = createStackNavigator();
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['isoke'],
+  blacklist: [],
 };
 const persistedReducer = persistReducer(persistConfig, allReducers);
 
-let store = createStore(persistedReducer);
+export let store = createStore(persistedReducer);
 let persistor = persistStore(store);
 
 class App extends React.Component {

@@ -16,7 +16,7 @@ export default function AppContainer() {
 
   return (
     <TopLevelNavigator
-      ref={(navigatorRef) => {
+      refs={(navigatorRef) => {
         NavigationService.setTopLevelNavigator(navigatorRef);
       }}
     />

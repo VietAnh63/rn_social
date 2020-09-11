@@ -38,8 +38,6 @@ export default function Home({navigation}) {
     </CardView>
   );
 
-  console.log(dataAPI.length);
-
   header = () => {
     return (
       <CardView style={{paddingTop: Metrics.baseMargin + 3}}>
@@ -56,13 +54,13 @@ export default function Home({navigation}) {
                 navigation.navigate('CreatePost');
               }}>
               <Image
-                source={require('../images/thangnc.jpg')}
+                source={require('../images/anhpv.jpg')}
                 style={{
                   height: 50,
                   width: 50,
                   borderRadius: 50 / 2,
                   marginRight: Metrics.baseMargin,
-                  borderWidth: 1,
+                  borderWidth: 0.3,
                   backgroundColor: 'green',
                 }}
               />
@@ -91,7 +89,7 @@ export default function Home({navigation}) {
         data={dataAPI}
         ListHeaderComponent={header}
         renderItem={renderItems}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._id}
       />
     </View>
   );

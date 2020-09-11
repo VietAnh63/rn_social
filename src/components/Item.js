@@ -1,26 +1,21 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, Image} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
 import {Metrics, Fonts, Colors} from '../themes';
-
+import {processImageUrl, processDate} from '../utils';
+import FitImage from 'react-native-fit-image';
+import ImageModal from 'react-native-image-modal';
 export default function Item(props) {
-  //console.log(dataAPI);
   const {title} = props;
-  const processImage = (url) => {
-    const str = url;
-    const linkImage = str.split('/');
-    return String(linkImage[1]);
-  };
-  //console.log(title.user_id.avatar_url);
+
   return (
     <View style={{marginTop: Metrics.baseMargin}}>
       <View style={{flexDirection: 'row', paddingTop: Metrics.baseMargin}}>
         {title.user_id.avatar_url ? (
           <Image
             source={{
-              uri:
-                'http://social.hungvu.net/' +
-                processImage(title.user_id.avatar_url),
+              uri: processImageUrl(title.user_id.avatar_url),
             }}
             style={{
               height: 50,
@@ -44,13 +39,22 @@ export default function Item(props) {
             }}>
             {title.user_id.user_name}
           </Text>
-          <Text
+          <View
             style={{
-              fontFamily: Fonts.style.h6.fontFamily,
-              backgroundColor: '#1fd092',
+              flexDirection: 'row',
             }}>
-            {title.created_date}
-          </Text>
+            <Entypo name="location" size={20} color={Colors.facebook}></Entypo>
+            <Text
+              style={{
+                fontFamily: Fonts.style.h6.fontFamily,
+                paddingLeft: Metrics.baseMargin,
+                color: Colors.facebook,
+                fontSize: 18,
+                fontWeight: 'bold',
+              }}>
+              {title.location}
+            </Text>
+          </View>
         </View>
       </View>
       <View
@@ -63,30 +67,40 @@ export default function Item(props) {
         }}>
         <Text>{title.content}</Text>
       </View>
-      <View>
+      <View style={{justifyContent: 'center'}}>
         {title.image_url ? (
-          <Image
+          <ImageModal
             source={{
-              uri: 'http://social.hungvu.net/' + processImage(title.image_url),
+              uri: processImageUrl(title.image_url),
             }}
             style={{
+              borderRadius: 10,
               maxHeight: 400,
               height: 300,
-              width: '100%',
-              marginRight: Metrics.baseMargin,
+              width: 350,
             }}
+            overlayBackgroundColor={Colors.frost}
+            swipeToDismiss={true}
+            imageBackgroundColor="white"
+            isTranslucent={true}
+            resizeMode="contain"
           />
         ) : (
-          <Image
+          <ImageModal
             source={{
               uri: 'https://loremflickr.com/320/240',
             }}
             style={{
               maxHeight: 400,
               height: 300,
-              width: '100%',
-              marginRight: Metrics.baseMargin,
+              width: 355,
+              borderRadius: 10,
             }}
+            overlayBackgroundColor={Colors.frost}
+            swipeToDismiss={true}
+            resizeMode="contain"
+            imageBackgroundColor="white"
+            isTranslucent={true}
           />
         )}
       </View>
@@ -112,8 +126,9 @@ export default function Item(props) {
               fontFamily: Fonts.style.description.fontFamily,
               paddingTop: 6,
               backgroundColor: '#1fd092',
+              color: 'white',
             }}>
-            {title.updated_date}
+            {processDate(title.updated_date)}
           </Text>
         </View>
       </View>
