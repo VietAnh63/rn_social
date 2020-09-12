@@ -33,11 +33,8 @@ export default function CreatePost() {
         console.log('User tapped custom button: ', response.customButton);
       } else {
         const source = {
-          uri:
-            Platform.OS === 'ios'
-              ? response.uri.replace('file://', '')
-              : response.uri,
-          name: response.fileName,
+          uri: response.uri,
+          name: 'zzzzz.jpg',
           type: response.type,
         };
         setImageData(source);
@@ -51,7 +48,7 @@ export default function CreatePost() {
     form.append('content', valueInput.content);
     form.append('location', 'Hà Nội');
     form.append('imageUrl', imageData);
-
+    console.log('zzzz', form);
     const result = await createPost(form);
     console.log('result', result);
   };
@@ -95,8 +92,8 @@ export default function CreatePost() {
           {imageData && imageData.uri ? (
             <Image
               source={{uri: imageData.uri}}
-              resizeMode="cover"
-              style={{height: 100, width: '100%'}}
+              resizeMode="contain"
+              style={{height: 400, width: '100%'}}
             />
           ) : null}
         </View>
