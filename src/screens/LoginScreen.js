@@ -1,6 +1,6 @@
-import React, {useState, Fragment, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {setAuth} from '../actions/authAction';
+import React, { useState, Fragment, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAuth } from '../actions/authAction';
 import {
   View,
   Image,
@@ -11,17 +11,17 @@ import {
   Alert,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {login} from '../service/Api';
+import { login } from '../service/Api';
 
-export default function LoginScreen({navigation}) {
+export default function LoginScreen({ navigation }) {
   const [inputValue, setInputValue] = useState({
-    email: '',
-    password: '',
+    email: 'hello@cee.com',
+    password: '123456'
   });
   const disPatch = useDispatch();
 
   const onChangeInput = (value, name) => {
-    setInputValue({...inputValue, [name]: value});
+    setInputValue({ ...inputValue, [name]: value });
   };
 
   const alert_notification = async () => {
@@ -72,8 +72,8 @@ export default function LoginScreen({navigation}) {
             alignSelf: 'center',
           }}
           colors={['#fa5d57', '#facca7']}
-          start={{x: 0.0, y: 0.4}}
-          end={{x: 1.0, y: 1.0}}
+          start={{ x: 0.0, y: 0.4 }}
+          end={{ x: 1.0, y: 1.0 }}
           locations={[0.0, 1.0]}>
           <Fragment>
             <TouchableOpacity
@@ -97,7 +97,7 @@ export default function LoginScreen({navigation}) {
             onPress={() => {
               navigation.navigate('SingUp');
             }}>
-            <Text style={{color: 'red', paddingLeft: 5, fontWeight: 'bold'}}>
+            <Text style={{ color: 'red', paddingLeft: 5, fontWeight: 'bold' }}>
               Sign Up
             </Text>
           </TouchableOpacity>

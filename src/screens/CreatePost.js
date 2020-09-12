@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import {View, Text, Image, TextInput, Platform} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, TextInput, Platform } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {Metrics, Fonts, Colors} from '../themes';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { Metrics, Fonts, Colors } from '../themes';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
-import {createPost} from '../service/Api';
+import { createPost } from '../service/Api';
 const options = {
   title: 'Select Avatar',
-  customButtons: [{name: 'fb', title: 'Choose Photo from Facebook'}],
+  customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
   storageOptions: {
     skipBackup: true,
     path: 'images',
@@ -18,7 +18,7 @@ export default function CreatePost() {
   const [valueInput, setValueInput] = useState({});
   const [imageData, setImageData] = useState({});
   const onChangeText = (text) => {
-    setValueInput((prev) => ({...valueInput, content: text}));
+    setValueInput((prev) => ({ ...prev, content: text }));
   };
 
   const onUpload = () => {
@@ -77,11 +77,11 @@ export default function CreatePost() {
             }}
             source={require('../images/anhpv.jpg')}
           />
-          <Text style={{paddingLeft: Metrics.baseMargin, alignSelf: 'center'}}>
+          <Text style={{ paddingLeft: Metrics.baseMargin, alignSelf: 'center' }}>
             User admin
           </Text>
         </View>
-        <View style={{padding: Metrics.baseMargin}}>
+        <View style={{ padding: Metrics.baseMargin }}>
           <TextInput
             placeholder="Bạn đang nghĩ gì"
             placeholderTextColor="gray"
@@ -91,9 +91,9 @@ export default function CreatePost() {
           />
           {imageData && imageData.uri ? (
             <Image
-              source={{uri: imageData.uri}}
+              source={{ uri: imageData.uri }}
               resizeMode="contain"
-              style={{height: 400, width: '100%'}}
+              style={{ height: 400, width: '100%' }}
             />
           ) : null}
         </View>
@@ -132,10 +132,10 @@ export default function CreatePost() {
           justifyContent: 'center',
         }}>
         <TouchableOpacity
-          style={{alignItems: 'center'}}
+          style={{ alignItems: 'center' }}
           onPress={() => onUpload()}>
           <AntDesign name="instagram" size={30} color={Colors.facebook} />
-          <Text style={{paddingTop: Metrics.baseMargin}}>Photo</Text>
+          <Text style={{ paddingTop: Metrics.baseMargin }}>Photo</Text>
         </TouchableOpacity>
       </View>
     </View>
