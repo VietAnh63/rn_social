@@ -1,6 +1,6 @@
-import React, {useState, Fragment, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {loginHome} from '../actions/actionLogin';
+import React, { useState, Fragment, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAuth } from '../actions/authAction';
 import {
   View,
   Image,
@@ -8,36 +8,37 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
-
 import LinearGradient from 'react-native-linear-gradient';
-import {Metrics, Fonts, Colors} from '../themes';
-import {login} from '../service/Api';
+import { login } from '../service/Api';
 
-export default function LoginScreen({navigation}) {
+export default function LoginScreen({ navigation }) {
   const [inputValue, setInputValue] = useState({
-    email: 'vietanhdeptrai@gmail.com',
-    password: '123456',
+    email: 'hello@cee.com',
+    password: '123456'
   });
   const disPatch = useDispatch();
-  var isoke = useSelector((state) => state.activeHome.isoke);
 
   const onChangeInput = (value, name) => {
-    setInputValue({...inputValue, [name]: value});
+    setInputValue({ ...inputValue, [name]: value });
   };
 
+  const alert_notification = async () => {
+    await Alert.alert('Sai tài khoản hoặc mật khẩu');
+  };
   const onLogin = async () => {
     try {
-      console.log('isoke', isoke);
       const result = await login(inputValue);
-      console.log('result', result);
-      if (result.status === 200) {
-        const action = await loginHome(isoke);
+      const token = result.data.token;
+      console.log('token', result);
+      if (token) {
+        const action = await setAuth(token);
         await disPatch(action);
       }
-      console.log('isoke', isoke);
     } catch (error) {
-      console.log(error);
+      await alert_notification();
+      console.log(error.message);
     }
   };
 
@@ -50,14 +51,17 @@ export default function LoginScreen({navigation}) {
           placeholderTextColor="gray"
           placeholder="Your email"
           onChangeText={(text) => onChangeInput(text, 'email')}
-          value={inputValue}
+          numericvalue
+          keyboardType={'numeric'}
+          value={inputValue.email}
         />
         <TextInput
           style={style_login.input}
           placeholderTextColor="gray"
           placeholder="Your password"
           onChangeText={(text) => onChangeInput(text, 'password')}
-          value={inputValue}
+          numericvalue
+          value={inputValue.password}
           secureTextEntry={true}
         />
         <LinearGradient
@@ -68,8 +72,8 @@ export default function LoginScreen({navigation}) {
             alignSelf: 'center',
           }}
           colors={['#fa5d57', '#facca7']}
-          start={{x: 0.0, y: 0.4}}
-          end={{x: 1.0, y: 1.0}}
+          start={{ x: 0.0, y: 0.4 }}
+          end={{ x: 1.0, y: 1.0 }}
           locations={[0.0, 1.0]}>
           <Fragment>
             <TouchableOpacity
@@ -91,10 +95,9 @@ export default function LoginScreen({navigation}) {
           <Text>No Account?</Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.push('SingUp');
-              //checkLogin();
+              navigation.navigate('SingUp');
             }}>
-            <Text style={{color: 'red', paddingLeft: 5, fontWeight: 'bold'}}>
+            <Text style={{ color: 'red', paddingLeft: 5, fontWeight: 'bold' }}>
               Sign Up
             </Text>
           </TouchableOpacity>

@@ -8,6 +8,7 @@ import {
   Dimensions,
   Button,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {Metrics, Fonts, Colors} from '../themes';
 import AntDMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -17,13 +18,32 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-import {logoutHome} from '../actions/actionLogin';
+import {removeAuth} from '../actions/authAction';
 export default function Profile({navigation}) {
-  const isoke = useSelector((state) => state.activeHome.isoke);
   const disPatch = useDispatch();
+
+  const confirm = () => {
+    Alert.alert(
+      'Bạn muốn đăng xuất?',
+      '',
+      [
+        {
+          text: 'Bỏ qua',
+          style: 'cancel',
+        },
+
+        {
+          text: 'Đồng ý',
+          onPress: () => onLogout(),
+        },
+      ],
+      {cancelable: false},
+    );
+  };
+
   const onLogout = async () => {
     try {
-      const action = await logoutHome(isoke);
+      const action = await removeAuth();
       await disPatch(action);
     } catch (error) {
       console.log(error);
@@ -52,11 +72,11 @@ export default function Profile({navigation}) {
                 width: 120,
                 height: 120,
                 borderRadius: 120 / 2,
-                borderWidth: 1,
+                borderWidth: 0.3,
                 backgroundColor: 'green',
                 position: 'absolute',
               }}
-              source={require('../images/thangnc.jpg')}
+              source={require('../images/anhpv.jpg')}
             />
             <View
               style={{
@@ -174,7 +194,7 @@ export default function Profile({navigation}) {
                   alignItems: 'center',
                 }}>
                 <Entypo name="log-out" size={25} color="red" />
-                <TouchableOpacity onPress={() => onLogout()}>
+                <TouchableOpacity onPress={() => confirm()}>
                   <Text style={{padding: Metrics.baseMargin + 7, color: 'red'}}>
                     Logout
                   </Text>
