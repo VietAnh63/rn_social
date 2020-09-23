@@ -5,11 +5,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Home from '../screens/Home';
+import Bookmark from '../screens/Bookmark';
 import Profile from '../screens/Profile';
 import Login from '../screens/LoginScreen';
 import Singup from '../screens/SingupScreen';
 import CreatePost from '../screens/CreatePost';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useSelector, useDispatch} from 'react-redux';
 import {Text} from 'react-native';
 import {Metrics, Fonts, Colors} from '../themes';
@@ -17,6 +19,7 @@ import {Metrics, Fonts, Colors} from '../themes';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const HomeStack = createStackNavigator();
+const BookMarkStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const CreatePostStack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -40,7 +43,17 @@ const TabContainer = () => {
           ),
         }}
       />
-
+      <Tab.Screen
+        name="Bookmark"
+        component={BookStackScreen}
+        options={{
+          tabBarLabel: 'Bookmark',
+          tabBarColor: '#9932cc',
+          tabBarIcon: ({color}) => (
+            <FontAwesome5 name="tags" color={color} size={26} />
+          ),
+        }}
+      />
       <Tab.Screen
         name="Profile"
         component={ProfileStackScreen}
@@ -69,6 +82,21 @@ const HomeStackScreen = ({navigation}) => (
     }}>
     <HomeStack.Screen name="Home" component={Home} />
   </HomeStack.Navigator>
+);
+
+const BookStackScreen = ({navigation}) => (
+  <BookMarkStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: '#9932cc',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}>
+    <BookMarkStack.Screen name="Bookmark" component={Bookmark} />
+  </BookMarkStack.Navigator>
 );
 
 const ProfileStackScreen = ({navigation}) => (
@@ -122,14 +150,14 @@ const StackContainer = () => {
   const isAuth = store.auth.token;
   console.log(isAuth);
   return (
-    <Drawer.Navigator initialRouteName="Home">
+    <Drawer.Navigator initialRouteName="DrawHome">
       {!isAuth ? (
         <>
           <Drawer.Screen name="SignIn" component={Login} />
         </>
       ) : (
         <>
-          <Drawer.Screen name="Home" component={TabContainer} />
+          <Drawer.Screen name="DrawHome" component={TabContainer} />
           <Stack.Screen name="CreatePost" component={CreatePostStackScreen} />
         </>
       )}

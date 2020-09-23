@@ -1,9 +1,4 @@
 import React from 'react';
-import Login from './src/screens/LoginScreen';
-import Signup from './src/screens/SingupScreen';
-import CreatePort from './src/screens/CreatePost';
-import Home from './src/screens/Home';
-import Profile from './src/screens/Profile';
 import 'react-native-gesture-handler';
 import {NavigationContainer, StackActions} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -21,10 +16,8 @@ import {
 // import storage from 'redux-persist/lib/storage' // or whatever storage you are using
 import {PersistGate} from 'redux-persist/es/integration/react';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import {MenuProvider} from 'react-native-popup-menu';
 import allReducers from './src/reducers';
-
-const Stack = createStackNavigator();
 
 const persistConfig = {
   key: 'root',
@@ -41,7 +34,9 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <AppContainer />
+          <MenuProvider>
+            <AppContainer />
+          </MenuProvider>
         </PersistGate>
       </Provider>
     );

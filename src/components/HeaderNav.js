@@ -2,7 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Header} from 'react-navigation-stack';
-//import {Metrics, Fonts, Colors} from '../themes';
+
 export default function HeaderNav(props) {
   return (
     <View style={{backgroundColor: 'black'}}>
